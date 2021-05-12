@@ -87,5 +87,5 @@ export default {
     assetFilter: function(assetFilename) {	    		
       return assetFilename.endsWith('.js');	    	
     }
-  }
+  },
 }
