@@ -30,14 +30,12 @@ export default {
         // 获取用户信息
         getUserInfo(){
             getInfo({userName: localStorage.getItem('userName')}).then(res =>{
-                console.log(res.data.code)
                 if(res.data.code == 2000){
                     this.user = res.data.data
                     localStorage.setItem('headerImg', res.data.list[0].headerImg || '')
                 }
-                console.log(this.user)
             }).catch(err => {
-                console.log('获取用户失败')
+                // console.log('获取用户失败')
             })
         }
     }

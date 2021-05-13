@@ -6,7 +6,7 @@
             <v-app-bar color="white" elevation="0">
                 <v-app-bar-nav-icon @click="openDrawer()" class="d-flex d-sm-none mr-2" color='primary'></v-app-bar-nav-icon>
                 <nuxt-link class="ml-2 mr-12 primary--text text-h6 pl-0" to='/' style="cursor: pointer;text-decoration:none"> BOWEI </nuxt-link>
-                <div class="d-none d-sm-block">
+                <div class="d-none d-sm-block"> 
                   <v-btn text class="mx-2 primary--text body-2 font-weight-bold" style="cursor: pointer" v-for="item in headerMenu" :key="item.to" @click="goPage(item.to)">{{ item.title }}</v-btn>
                   <v-btn text class="mx-2 primary--text body-2 font-weight-bold" style="cursor: pointer" @click="dialog = true">工单支持</v-btn>
                 </div>
@@ -32,6 +32,13 @@
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item @click="workOrder()">
+            <v-list-item-icon>
+              <v-icon>mdi-cloud-question</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>工单提交</v-list-item-title>
           </v-list-item>
 
           <v-list-item @click="exit()">
@@ -141,7 +148,11 @@ export default {
     },
     exit(){
       localStorage.clear()
-      this.$router.replace('/')
+      this.$router.go(0)
+    },
+    workOrder(){
+      this.dialog = true;
+      this.drawer = false;
     }
   }
 };

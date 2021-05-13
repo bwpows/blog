@@ -72,12 +72,12 @@ export default {
                 if(res.data.code == 2000){
                     this.user = res.data.data
                     this.user.sex = res.data.data.sex.toString()
-                    console.log(this.user)
                     localStorage.setItem('nickName', res.data.data.nickName)
                     localStorage.setItem('headerImg', res.data.data.headerImg)
                     this.$forceUpdate()
                 }else{
-                    console.log(res)
+                    this.snackbar = false;
+                    this.snackbarText = '获取个人信息失败'
                 }
             })
         },
@@ -85,7 +85,6 @@ export default {
         updateUserInfo(){
             this.snackbar = true
             putInfo(this.user).then(res => {
-                console.log(res)
                 if(res.data.code == 2000){
                     this.getUserInfo()
                 }

@@ -119,7 +119,6 @@ export default {
                     this.dialogText = res.data.msg
                 }
             }).catch(err=>{
-                console.log(err)
             })
         },
 
@@ -150,7 +149,6 @@ export default {
                     this.dialogText = res.data.msg
                 }
             }).catch(err=>{
-                console.log(err)
             })
 
         },
@@ -159,13 +157,11 @@ export default {
             venCode({mail:this.userName, mailCode: this.code}).then(res=>{
                 if(res.data.code == 2000){
                     this.regStep = 2
-                    console.log('验证码正确')
                 }else{
                     this.dialog = true
                     this.dialogText = '验证码错误'
                 }
             }).catch(err=>{
-                console.log(err)
             })
         },
         
@@ -175,10 +171,10 @@ export default {
                 if(res.data.code == 2000){
                     this.login()                // 注册成功之后该执行的函数
                 }else{
-                    console.log('注册失败')     // 注册失败执行的函数
+                    this.dialog = true
+                    this.dialogText = '注册失败'
                 }
             }).catch(err=>{
-                console.log(err)                // 发生错误执行的函数
             })
         },
         

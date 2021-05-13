@@ -60,13 +60,12 @@
       // 获取用户信息
       getUserInfo(){
          getInfo({userName: localStorage.getItem('userName')}).then(res =>{
-           console.log(res)
             if(res.data.code == 2000){
               this.user = res.data.data[0]
               localStorage.setItem('headerImg', res.data.list[0].headerImg || '')
             }
          }).catch(err => {
-           console.log('获取用户失败')
+          //  console.log('获取用户失败')
          })
       },
 
@@ -84,7 +83,7 @@
               alert(res.data.msg)
             }
         }).catch(err=>{
-            console.log(err)
+            // console.log(err)
         })
       },
       // 前往博客详情页
@@ -103,7 +102,7 @@
           }
           this.loadingBlogInfo = false
         }).catch(err=>{
-          console.log(err)
+          // console.log(err)
           this.loadingBlogInfo = false
         })
       },
@@ -112,7 +111,7 @@
         getByBlogIdComment({blogId:blog._id}).then((res)=>{
           this.commentInfo = res.data.data
         }).catch(err=>{
-          console.log(err)
+          // console.log(err)
         })
       },
 
@@ -133,7 +132,6 @@
       },
 
       editBlog(blog){
-        console.log(blog)
         this.$router.push({
           path : './EditBlog',
           query:{id: blog._id}
@@ -153,7 +151,7 @@
           this.commentContent = ''
           this.getComment(this.seeBloger)
         }).catch(err=>{
-          console.log(err)
+          // console.log(err)
         })
       },
 
