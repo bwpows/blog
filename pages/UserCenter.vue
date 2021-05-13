@@ -9,7 +9,13 @@
             <UserInfo />
           </v-col>
       </v-row>
-      <v-dialog v-model="sheet" fullscreen style="z-index: 2001;" transition="bottom-sheet-transition" class="blogInfo">
+      <v-dialog v-model="sheet" fullscreen style="z-index: 2001; overflow: auto;" class="blogInfo" transition="dialog-bottom-transition">
+        <v-sheet style="background-color: #f4f7fe; min-height: 100vh" class="text-center" v-if='loadingBlogInfo'>
+          <v-overlay :value="loadingBlogInfo" color="rgb(255,255,255)" opacity='.9' class="text-center overlayBox" style="z-index: 1000">
+            <v-progress-circular :size="60" color="primary" indeterminate></v-progress-circular>
+            <div class="primary--text mt-12">正在加载...</div>
+          </v-overlay>
+        </v-sheet>
         <BlogInfo :userInfo='userInfo' :blogInfo='blogInfo' :commentInfo='commentInfo' :key="(new Date()).getTime()" @close='sheet = false' @delBlog='openDialog' @editBlog='editBlog' @publishComment = 'publishComment' />
       </v-dialog>
       <Dialog :dialog='dialogInfo.dialog' :title="dialogInfo.title" @leftBtnEvent='dialogInfo.dialog = false' @rightBtnEvent="delBlog()" />
@@ -33,6 +39,7 @@
         title: '是否删除此文章?'
       },
       tipDialog:{},
+      loadingBlogInfo: false
     }),
     head(){
       return {
@@ -82,6 +89,7 @@
       },
       // 前往博客详情页
       goBlogInfo(blog){
+        this.loadingBlogInfo = true
         this.sheet = true
         this.seeBloger = blog
         this.getComment(blog)
@@ -93,8 +101,10 @@
           }else{
             this.isAdmin = false
           }
+          this.loadingBlogInfo = false
         }).catch(err=>{
           console.log(err)
+          this.loadingBlogInfo = false
         })
       },
 

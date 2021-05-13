@@ -75,7 +75,7 @@ export default {
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
           success: colors.green.accent3,
-          backgroundColor: '#f4f7fe'
+          backgroundColor: '#f5f5f5'
         }
       }
     }

@@ -6,7 +6,7 @@
       </v-col>
       <v-col cols="4" class="d-none d-sm-block">
         <BwInfo />
-        <HotBlog />
+        <HotBlog @blogInfo='goBlogInfo' />
       </v-col>
     </v-row>
 
@@ -137,12 +137,4 @@ export default {
   }
 }
 </script>
-<style>
-.main /deep/ .v-bottom-sheet{
-  overflow: auto;
-}
-.main /deep/ .v-dialog{
-  overflow: auto;
-}
-</style>
 

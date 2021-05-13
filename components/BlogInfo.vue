@@ -1,5 +1,5 @@
 <template>
-    <v-sheet style="overflow-y: hidden; min-height: 100vh; background-color: #f4f7fe">
+    <v-sheet style="overflow-y: hidden; min-height: 100vh; background-color: #f5f5f5">
       <div style="z-index: 2001; position: relative; max-width: 1400px; margin: 0 auto;">
         <v-btn fab x-small class="grey darken-2 mt-4 mx-3" @click="$emit('close')" elevation="0" style="position: fixed;" >
           <v-icon color="white" size="28">mdi-close</v-icon>
@@ -79,7 +79,6 @@ export default {
         }
     },
     created(){
-        console.log(this.commentInfo)
         this.isAdmin = this.blogInfo.userName == localStorage.getItem('userName')?true:false
         this.isLogin = localStorage.getItem('userName')?false:true;
         this.headerImg = localStorage.getItem('headerImg');

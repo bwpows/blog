@@ -2,11 +2,8 @@
     <v-card class="rounded-lg" style="cursor: pointer" elevation='0'>
         <v-card-title class="pb-1"> 最新文章 </v-card-title>
         <v-card-text>
-            <!-- <v-hover v-slot:default="{ hover }" v-for="(item,index) in blogs" :key="item.id">
-                <div class="text-truncate my-1" :class="hover?'primary--text font-weight-bold':''" v-text="(index+1)+'. '+item.blogTitle" @click="goBlogInfo(item._id)"></div>
-            </v-hover> -->
             <v-hover v-slot:default="{ hover }" v-for="(item,index) in blogs" :key="item.id">
-                <div class="text-truncate my-1" :class="hover?'primary--text font-weight-bold':''" v-text="(index+1)+'. '+item.blogTitle" @click="$emit('')"></div>
+                <div class="text-truncate my-1" :class="hover?'primary--text font-weight-bold':''" v-text="(index+1)+'. '+item.blogTitle" @click="$emit('blogInfo', item)"></div>
             </v-hover>
         </v-card-text>
     </v-card>
