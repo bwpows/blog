@@ -11,7 +11,7 @@
                   <v-btn text class="mx-2 primary--text body-2 font-weight-bold" style="cursor: pointer" @click="dialog = true">工单支持</v-btn>
                 </div>
                 <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="$router.push('/UserCenter')" v-if="userInfo.nickName">{{userInfo.nickName || '小诸葛'}}</v-btn>
+                <v-btn text color="primary" @click="goUserCenter()" v-if="userInfo.nickName">{{userInfo.nickName || '小诸葛'}}</v-btn>
                 <v-btn text color="primary" @click="$router.push('/Login')" v-else>登录/注册</v-btn>
             </v-app-bar>
           </v-col>
@@ -91,15 +91,15 @@ export default {
     },{
       title: '个人中心',
       icon: 'mdi-account',
-      to: '/UserCenter'
+      to: 'UserCenter'
     },{
       title: '编辑资料',
       icon: 'mdi-cog',
-      to: '/Setting'
+      to: 'Setting'
     },{
       title: '写文章',
       icon: 'mdi-pencil',
-      to: '/EditBlog'
+      to: 'EditBlog'
     }]
   }),
   created(){
@@ -126,12 +126,26 @@ export default {
         this.$router.replace('/')
       };
       if(localStorage.getItem('userName')){
-        this.$router.replace(item)
+        if(item == 'UserCenter'){
+          this.$router.replace({
+            path: item, query:{ userName: localStorage.getItem('userName')}
+          })
+        }else{
+          this.$router.replace(item)
+        }
+        
       }else{
         this.dialogInfo.dialog = true;
         this.dialogInfo.title = '还没登录，是否登录？'
       }
     },
+
+    goUserCenter(){
+      this.$router.replace({
+        path: 'UserCenter', query:{ userName: localStorage.getItem('userName')}
+      })
+    },
+
     feedback(){
       this.dialog = false
       this.$store.commit('todos/updateOverlay', {show: true, text:'正在提交反馈'})
@@ -141,14 +155,16 @@ export default {
           setTimeout(() => {
             this.$store.commit('todos/updateOverlay', {show: false, text:''})
             this.order = {}
-          }, 500);
+          }, 300);
         }
       })
     },
+
     exit(){
       localStorage.clear()
       this.$router.go(0)
     },
+
     workOrder(){
       this.dialog = true;
       this.drawer = false;

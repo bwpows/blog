@@ -50,7 +50,7 @@ export default {
       }
     },
     overlay: true,
-    colorData:['#1976D2','#ff6260','#ffb23e','#FDD835','#43A047','#ffffff']
+    colorData:['#1976D2','#ff6260','#ffb23e','#FDD835','#43A047']
   }),
 
   head(){
@@ -75,7 +75,6 @@ export default {
             this.$forceUpdate()
           }
         }
-      }).catch(err=>{
       })
     }else{
       this.blogInfo.userName = localStorage.getItem('userName')
@@ -141,8 +140,13 @@ export default {
             this.$store.commit('todos/updateOverlay', {show: true, text:'发表文章成功'})
             setTimeout(() => {
               this.$store.commit('todos/updateOverlay', {show: false, text:''})
-              this.$router.replace('/UserCenter')
-            }, 800);
+              this.$router.replace({
+                path: 'UserCenter',
+                query:{
+                  userName: this.blogInfo.userName
+                }
+              })
+            }, 300);
           }
         })
       }else{

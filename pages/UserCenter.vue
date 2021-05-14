@@ -2,11 +2,11 @@
   <v-main>
       <v-row justify="center" class="mx-2">
           <v-col xs='12' sm='8' md='8' lg='8' xl='8'>
-            <div v-if="blogLists.length == 0" class="primary--text"> 你暂时还没写博客哦 </div>
+            <div v-if="blogLists.length == 0" class="primary--text mt-5"> 你暂时还没写博客哦 </div>
             <Blog v-else v-for="(blog, index) in blogLists" :key="index" :title=blog.blogTitle :content=blog.blogContent :classify=blog.classify :color=blog.color :createTime=blog.updateTime @goBlogInfo="goBlogInfo(blog)" />
           </v-col>
           <v-col cols="4" class="d-none d-sm-block">
-            <UserInfo />
+            <UserInfo :userName=user.userName />
           </v-col>
       </v-row>
       <v-dialog v-model="sheet" fullscreen style="z-index: 2001; overflow: auto;" class="blogInfo" transition="dialog-bottom-transition">
@@ -47,8 +47,8 @@
       }
     },
     mounted () {
-      this.getBlogList();
-      this.getUserInfo();
+      this.getBlogList(this.$route.query.userName);
+      this.getUserInfo(this.$route.query.userName);
     },
     filters:{
       timeFilters(value){
@@ -58,20 +58,17 @@
     methods: {
 
       // 获取用户信息
-      getUserInfo(){
-         getInfo({userName: localStorage.getItem('userName')}).then(res =>{
+      getUserInfo(userName){
+         getInfo({userName}).then(res =>{
             if(res.data.code == 2000){
-              this.user = res.data.data[0]
-              localStorage.setItem('headerImg', res.data.list[0].headerImg || '')
+              this.user = res.data.data
             }
-         }).catch(err => {
-          //  console.log('获取用户失败')
          })
       },
 
       // 获取博客列表
-      getBlogList(){
-        byUsGetBlog({userName: localStorage.getItem('userName')}).then(res=>{
+      getBlogList(userName){
+        byUsGetBlog({userName}).then(res=>{
             if(res.data.code == 2000){
               this.blogLists = res.data.data
               this.blogLists.reverse()
@@ -82,8 +79,6 @@
             }else{
               alert(res.data.msg)
             }
-        }).catch(err=>{
-            // console.log(err)
         })
       },
       // 前往博客详情页
@@ -102,7 +97,6 @@
           }
           this.loadingBlogInfo = false
         }).catch(err=>{
-          // console.log(err)
           this.loadingBlogInfo = false
         })
       },
@@ -110,8 +104,6 @@
       getComment(blog){
         getByBlogIdComment({blogId:blog._id}).then((res)=>{
           this.commentInfo = res.data.data
-        }).catch(err=>{
-          // console.log(err)
         })
       },
 
@@ -150,13 +142,8 @@
         addComment(obj).then(res=>{
           this.commentContent = ''
           this.getComment(this.seeBloger)
-        }).catch(err=>{
-          // console.log(err)
         })
       },
-
-
-
 
       // 前往编辑博客
       goEditBlog(){

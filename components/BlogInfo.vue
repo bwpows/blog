@@ -11,7 +11,7 @@
             <div class="primary--text text-h5 mt-6">{{ blogInfo.blogTitle }}</div>
             <div class="d-flex justify-space-between align-center mb-3 pt-4 white">
                 <div class="d-flex align-center">
-                    <img :src="userInfo.headerImg?$store.state.configURL+userInfo.headerImg:require('@/static/head.webp')" alt="头像" style="border-radius: 5px;" class="mr-4" max-width="50px" height="50px" />
+                    <img :src="userInfo.headerImg?$store.state.configURL+userInfo.headerImg:require('@/static/head.webp')" alt="头像" style="border-radius: 5px;" class="mr-4 pointer" max-width="50px" height="50px" @click="goUserInfo()" />
                     <div class="text-body-1">
                         <div>{{ userInfo.nickName || userInfo.userName }}</div>
                         <div class="grey--text">{{ blogInfo.updateTime || blogInfo.createTime | timeFilters}}</div>
@@ -112,6 +112,14 @@ export default {
           this.imgPreview.show = true
         }
       },
+      goUserInfo(){
+        this.$router.replace({
+          path: 'UserCenter',
+          query:{
+            userName: this.userInfo.userName
+          }
+        })
+      }
     }
 }
 </script>
