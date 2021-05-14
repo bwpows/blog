@@ -64,8 +64,6 @@ export default {
       this.type = 2
       getBlog({_id:this.$route.query.id}).then(res=>{
         if(res.data.code == 2000){
-          console.log(res.data.data[0].userName)
-          console.log(localStorage.getItem('userName'))
           if(res.data.data[0].userName != localStorage.getItem('userName')){
             alert('请不要企图编辑别人的博客')
           }else{
@@ -78,7 +76,6 @@ export default {
           }
         }
       }).catch(err=>{
-        console.log(err)
       })
     }else{
       this.blogInfo.userName = localStorage.getItem('userName')
@@ -138,7 +135,6 @@ export default {
 
       if(this.type == 1){
         // 添加博客
-        console.log(this.blogInfo)
         this.$store.commit('todos/updateOverlay', {show: true, text:'正在发表...'})
         addBlog(this.blogInfo).then(res => {
           if(res.data.code == 2000){

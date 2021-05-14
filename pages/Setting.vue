@@ -31,7 +31,7 @@
                     <v-subheader class="body-1 pl-0">简介：</v-subheader>
                     <v-textarea class="rounded-lg" solo name="input-7-4" label="介绍一下自己吧" v-model="user.intro"></v-textarea>
                 </div>
-                <v-btn color="primary" dense width="100" @click="updateUserInfo()">保存</v-btn>
+                <v-btn color="primary" dense width="100" @click="updateUserInfo()" style="margin-left: 64px;">保存</v-btn>
             </v-col>
         </v-row>
         <v-snackbar v-model="snackbar" :timeout="timeout">

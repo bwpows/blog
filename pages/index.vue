@@ -81,7 +81,6 @@ export default {
         }
         this.loadingBlogInfo = false
       }).catch(err=>{
-        console.log(err)
       })
     },
 
@@ -89,7 +88,6 @@ export default {
       getByBlogIdComment({blogId:blog._id}).then((res)=>{
         this.commentInfo = res.data.data
       }).catch(err=>{
-        console.log(err)
       })
     },
 
@@ -109,7 +107,6 @@ export default {
     },
 
     editBlog(blog){
-      console.log(blog)
       this.$router.push({
         path : './EditBlog',
         query:{id: blog._id}
@@ -124,13 +121,11 @@ export default {
         }
         return false;
       }
-      console.log(this.seeBloger._id)
       let obj = { blogId: this.seeBloger._id, userName:localStorage.getItem('userName'), commentContent:commentContent, commentObject:localStorage.getItem('userName') }
       addComment(obj).then(res=>{
         this.commentContent = ''
         this.getComment(this.seeBloger)
       }).catch(err=>{
-        console.log(err)
       })
     },
 

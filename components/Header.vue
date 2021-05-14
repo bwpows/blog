@@ -142,7 +142,6 @@ export default {
             this.$store.commit('todos/updateOverlay', {show: false, text:''})
             this.order = {}
           }, 500);
-          console.log('提交成功')
         }
       })
     },

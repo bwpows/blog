@@ -107,8 +107,6 @@ export default {
     },
     methods:{
       showImg(e) {
-      // console.log(e.target)
-      console.log(e)
         if (e.target.tagName == 'IMG') {
           this.imgPreview.img = e.target.src
           this.imgPreview.show = true

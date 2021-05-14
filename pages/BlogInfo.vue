@@ -110,7 +110,7 @@ export default {
         this.isAdmin = true
       }
     }).catch(err=>{
-      console.log(err)
+      // console.log(err)
     })
 
     this.getComment()
@@ -130,7 +130,7 @@ export default {
       getByBlogIdComment({blogId:this.$route.query.id}).then((res)=>{
         this.commentInfo = res.data.data
       }).catch(err=>{
-        console.log(err)
+        // console.log(err)
       })
     },
 
@@ -149,7 +149,7 @@ export default {
         this.commentContent = ''
         this.getComment()
       }).catch(err=>{
-        console.log(err)
+        // console.log(err)
       })
     },
 
