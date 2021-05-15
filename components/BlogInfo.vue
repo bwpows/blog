@@ -7,7 +7,7 @@
       </div>
       <v-row style=" max-width: 1400px; margin: 60px auto;">
         <v-col xs='12' sm='8' md='8' lg='8' xl='8'>
-          <div class="rounded-lg white px-4 pt-1">
+          <!-- <div class="rounded-lg white px-4 pt-1">
             <div class="primary--text text-h5 mt-6">{{ blogInfo.blogTitle }}</div>
             <div class="d-flex justify-space-between align-center mb-3 pt-4 white">
                 <div class="d-flex align-center">
@@ -27,9 +27,9 @@
                     <div v-html="blogInfo.blogContent" @click="showImg($event)">{{blogInfo.blogContent}}</div>
                 </div>
             </div>
-          </div>
+          </div> -->
 
-          <div class="mt-12">
+          <!-- <div class="mt-12">
               <div class="mb-10 d-flex" v-if="isLogin">
                   <v-btn color="primary--text" class="white" elevation="0">登录才能发表评论哦</v-btn>
               </div>
@@ -54,18 +54,18 @@
               </div>
               <v-divider v-if="index != commentInfo.length-1"></v-divider>
             </div>
-          </div>
+          </div> -->
         </v-col>
-        <v-col cols="4" class="d-none d-sm-block">
-          <HotBlog />
-        </v-col>
+        <!-- <v-col cols="4" class="d-none d-sm-block">
+          <HotBlog @blogInfo='updateBlogInfo()' />
+        </v-col> -->
       </v-row>
-      <v-dialog v-model="imgPreview.show" scrollable fullscreen :overlay="false" overlay-color='black'>
+      <!-- <v-dialog v-model="imgPreview.show" scrollable fullscreen :overlay="false" overlay-color='black'>
           <div class="imgDolg" v-show="imgPreview.show" @click="imgPreview.show = false">
             <i class="el-icon-close" id="imgDolgClose" @click="imgPreview.show = false"></i>
             <img @click.stop="imgPreview.show = !imgPreview.show" :src="imgPreview.img" />
           </div>
-      </v-dialog>
+      </v-dialog> -->
     </v-sheet>
 </template>
 <script>
@@ -119,6 +119,9 @@ export default {
             userName: this.userInfo.userName
           }
         })
+      },
+      updateBlogInfo(){
+        this.userInfo = {}
       }
     }
 }

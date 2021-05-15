@@ -6,7 +6,7 @@
       </v-col>
       <v-col cols="4" class="d-none d-sm-block">
         <BwInfo />
-        <HotBlog @blogInfo='goBlogInfo' />
+        <HotBlog @blogInfo='goBlogInfo()' />
       </v-col>
     </v-row>
 
@@ -17,7 +17,26 @@
           <div class="primary--text mt-5">正在加载...</div>
         </v-overlay>
       </v-sheet>
-      <BlogInfo :userInfo='userInfo' :blogInfo='blogInfo' :commentInfo='commentInfo' :key="(new Date()).getTime()" @close='sheet = false' @delBlog='openDialog' @editBlog='editBlog' @publishComment = 'publishComment' v-else />
+
+      <v-sheet style="overflow-y: hidden; min-height: 100vh; background-color: #f5f5f5" v-else>
+        <div style="z-index: 2001; position: relative; max-width: 1400px; margin: 0 auto; opacity: 0.9">
+          <v-btn fab small class="grey darken-2 mt-4 mx-3" @click="sheet=false" elevation="0" style="position: fixed;">
+            <v-icon color="white" size="28">mdi-close</v-icon>
+          </v-btn>
+        </div>
+        <v-row style="max-width: 1400px; margin: 60px auto;">
+          <v-col xs='12' sm='8' md='8' lg='8' xl='8'>
+            <BlogContent :blogInfo='blogInfo' :userInfo='userInfo' @showImg="showImg" @editBlog='editBlog' @delBlog='openDialog' :key="(new Date()).getTime()" />
+            <Comment :commentInfo='commentInfo' @publishComment='publishComment' />
+          </v-col>
+          <v-col cols="4" class="d-none d-sm-block">
+            <HotBlog @blogInfo='updateBlogInfo()' />
+          </v-col>
+        </v-row>
+        <ImgPreview :imgPreview='imgPreview' />
+      </v-sheet>
+
+      <!-- <BlogInfo :userInfo='userInfo' :blogInfo='blogInfo' :commentInfo='commentInfo' :key="(new Date()).getTime()" @close='sheet = false' @delBlog='openDialog' @editBlog='editBlog' @publishComment = 'publishComment' v-else /> -->
     </v-dialog>
     <TipDialog :dialog='tipDialog.dialog' :content='tipDialog.content' @BtnEvent='tipDialog.dialog = false' />
     <Dialog :dialog='dialogInfo.dialog' :title="dialogInfo.title" @leftBtnEvent='dialogInfo.dialog = false' @rightBtnEvent="delBlog()" />
@@ -43,7 +62,8 @@ export default {
     },
     tipDialog:{},
     seeBloger:{},
-    loadingBlogInfo:true
+    loadingBlogInfo:true,
+    imgPreview:{img:"",show:false}
     
   }),
   async asyncData(){
@@ -127,6 +147,13 @@ export default {
         this.getComment(this.seeBloger)
       }).catch(err=>{
       })
+    },
+
+    showImg(e) {
+      if (e.target.tagName == 'IMG') {
+        this.imgPreview.img = e.target.src
+        this.imgPreview.show = true
+      }
     },
 
   }

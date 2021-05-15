@@ -22,15 +22,15 @@ export default {
         })
     },
     methods:{
-        goBlogInfo(_id){
-            let goBlogInfo = this.$router.resolve({
-                path: "/BlogInfo",
-                query: {
-                    id: _id
-                }
-            });
-            window.open(goBlogInfo.href, '_blank');
-        }
+        // goBlogInfo(_id){
+        //     let goBlogInfo = this.$router.resolve({
+        //         path: "/BlogInfo",
+        //         query: {
+        //             id: _id
+        //         }
+        //     });
+        //     window.open(goBlogInfo.href, '_blank');
+        // }
     }
 }
 </script>
