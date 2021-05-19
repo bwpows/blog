@@ -1,7 +1,7 @@
 <template>
     <v-card elevation='0' class="my-8 rounded-lg pb-2" @click="goBlogInfo()">
-        <v-card-title class="body-1 pb-2" :style="{color:(color || borderColor)}">{{ title }} </v-card-title>
-        <v-divider color='' class="grey lighten-3"></v-divider>
+        <v-card-title class="body-1 pb-2">{{ title }} </v-card-title>
+        <v-divider></v-divider>
         <v-card-subtitle class="text-over no-warp ma-0 mb-2" v-html="content"></v-card-subtitle>
         <v-card-actions class="justify-space-between mr-3 py-0">
             <v-btn text class="font-weight-regular">{{ classify || 'other' }}</v-btn>

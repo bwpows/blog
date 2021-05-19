@@ -1,22 +1,32 @@
 <template>
   <div>
-    <div style="height: 56px;">
-        <v-row justify="center" class="white pa-0 ma-0" style="position: fixed; top: 0; left: 0; width: 100vw; z-index: 998;">
-          <v-col lg='9' md='12' class="pa-0 ma-0">
-            <v-app-bar color="white" elevation="0">
-                <v-app-bar-nav-icon @click="openDrawer()" class="d-flex d-sm-none mr-2" color='primary'></v-app-bar-nav-icon>
-                <nuxt-link class="ml-2 mr-12 primary--text text-h6 pl-0" to='/' style="cursor: pointer;text-decoration:none"> BOWEI </nuxt-link>
-                <div class="d-none d-sm-block"> 
-                  <v-btn text class="mx-2 primary--text body-2 font-weight-bold" style="cursor: pointer" v-for="item in headerMenu" :key="item.to" @click="goPage(item.to)">{{ item.title }}</v-btn>
-                  <v-btn text class="mx-2 primary--text body-2 font-weight-bold" style="cursor: pointer" @click="dialog = true">工单支持</v-btn>
-                </div>
-                <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="goUserCenter()" v-if="userInfo.nickName">{{userInfo.nickName || '小诸葛'}}</v-btn>
-                <v-btn text color="primary" @click="$router.push('/Login')" v-else>登录/注册</v-btn>
-            </v-app-bar>
-          </v-col>
-        </v-row>
-    </div>
+    <v-app-bar class="headerColor" elevation="0">
+      <v-row align-content='center' justify='center'>
+        <v-col xs='12' sm='12' md='12' lg='9' xl='9' class="d-flex align-center pa-0">
+          <v-app-bar-nav-icon @click="openDrawer()" class="d-flex d-sm-none mr-2" color='primary'></v-app-bar-nav-icon>
+          <nuxt-link class="ml-2 mr-12 text-h6 pl-0 pointer" to='/' style="text-decoration:none"> BOWEI </nuxt-link>
+          <div class="d-none d-sm-block"> 
+            <v-btn text class="mx-2 body-2 font-weight-bold primary--text" v-for="item in headerMenu" :key="item.to" @click="goPage(item.to)">{{ item.title }}</v-btn>
+            <v-btn text class="mx-2 body-2 font-weight-bold primary--text" @click="dialog = true">工单支持</v-btn>
+          </div>
+          <v-spacer></v-spacer>
+
+          <v-menu offset-y v-if="userInfo.nickName">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" text v-bind="attrs" v-on="on">{{userInfo.nickName || '小诸葛'}}</v-btn>
+            </template>
+            <v-list>
+              <v-list-item v-for="(item, index) in userMenu" dense :key="index" @click="openMenu(item.eventName)">
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+          <!-- <v-btn color="primary" text  v-if="userInfo.nickName" @click="goUserCenter()">{{userInfo.nickName || '小诸葛'}}</v-btn> -->
+          <v-btn text @click="$router.push('/Login')" v-else>登录/注册</v-btn>
+        </v-col>
+      </v-row>
+        
+    </v-app-bar>
     <v-navigation-drawer v-model="drawer" fixed temporary style="z-index: 999; max-height: 100vh;">
       <v-list nav dense class="pt-4">
         <div class="d-flex my-4">
@@ -26,7 +36,10 @@
             <div class="body-2 grey--text text--darken-2 text-truncate" style="width: 140px;">{{userInfo.intro || '暂时还没有描述哦'}}</div>
           </div>
         </div>
-        <v-list-item-group v-model="group" active-class="primary--text text--accent-4">
+
+        <v-btn text class="mt-4 primary--text" v-if="!isLogin" @click="$router.go('Login')">还没登录，点击登录？</v-btn>
+
+        <v-list-item-group v-model="group" active-class="primary--text text--accent-4" v-else>
           <v-list-item v-for="item in headerMenu" :key="item.to" @click="goPage(item.to)">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -41,12 +54,13 @@
             <v-list-item-title>工单提交</v-list-item-title>
           </v-list-item>
 
-          <v-list-item @click="exit()">
+          <v-list-item v-for="item in userMenu" :key="item.to" @click="openMenu(item.eventName)">
             <v-list-item-icon>
-              <v-icon>mdi-exit-to-app</v-icon>
+              <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>退出</v-list-item-title>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
+
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -84,27 +98,25 @@ export default {
     group: null,
     userInfo: {},
     order:{},
-    headerMenu: [{
-      title: '主页',
-      icon: 'mdi-home',
-      to: '/'
-    },{
-      title: '个人中心',
-      icon: 'mdi-account',
-      to: 'UserCenter'
-    },{
-      title: '编辑资料',
-      icon: 'mdi-cog',
-      to: 'Setting'
-    },{
-      title: '写文章',
-      icon: 'mdi-pencil',
-      to: 'EditBlog'
-    }]
+    headerMenu: [
+      { title: '主页', icon: 'mdi-home', to: '/'},
+      { title: '个人中心', icon: 'mdi-account', to: 'UserCenter'},
+      { title: '写文章', icon: 'mdi-pencil', to: 'EditBlog'}
+    ],
+    userMenu:[
+      {title:'编辑资料', eventName:'editInfo', icon:'mdi-cog'},
+      {title:'我的点赞', eventName:'fabulous', icon:'mdi-thumb-up'},
+      {title:'切换主题', eventName:'theme', icon:'mdi-weather-sunset'},
+      {title:'退出登录', eventName:'exit', icon:'mdi-exit-to-app'}
+    ],
+    isLogin: false
   }),
   created(){
+    this.isLogin = localStorage.getItem('userName')?true:false
+
     this.userInfo.nickName = localStorage.getItem('nickName') || false
     this.userInfo.headerImg = localStorage.getItem('headerImg') || false
+    this.userInfo.userName = localStorage.getItem('userName') || false
     this.order.userName = localStorage.getItem('userName') || ''
     if(this.order.userName && !localStorage.getItem('token')){
       this.dialogInfo={
@@ -114,29 +126,30 @@ export default {
     }
   },
   methods:{
+    openMenu(item){
+      if(item == 'theme'){
+        this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+      }else if(item == 'editInfo'){
+        this.$router.replace('Setting')
+      }else if(item == 'exit'){
+        this.exit()
+      }
+    },
     openDrawer(){
       this.drawer = true
       this.userInfo.nickName = localStorage.getItem('nickName') || false
       this.userInfo.headerImg = localStorage.getItem('headerImg') || false
-      this.order.userName = localStorage.getItem('userName') || ''
     },
 
     goPage(item){
       if(item == '/') {
         this.$router.replace('/')
       };
-      if(localStorage.getItem('userName')){
-        if(item == 'UserCenter'){
-          this.$router.replace({
-            path: item, query:{ userName: localStorage.getItem('userName')}
-          })
-        }else{
-          this.$router.replace(item)
-        }
-        
+      if(item == 'UserCenter'){
+        console.log(localStorage.getItem('userName'))
+        this.goUserCenter()
       }else{
-        this.dialogInfo.dialog = true;
-        this.dialogInfo.title = '还没登录，是否登录？'
+        this.$router.replace(item)
       }
     },
 

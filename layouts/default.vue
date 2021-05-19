@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Header v-if="$route.path!='/Login'" />
-    <v-main>
+    <v-main class="backgroundColor">
       <v-row justify="center" class="ma-0 pa-0" v-if="$route.path!='/Login'">
         <v-col md='12' lg='9' class="ma-0 pa-0">
           <nuxt />

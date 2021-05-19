@@ -1,5 +1,5 @@
 <template>
-  <v-main class="main">
+  <v-main>
     <v-row class="mx-2">
       <v-col xs='12' sm='8' md='8' lg='8' xl='8'>
         <Blog v-for="(blog, index) in blogLists" :key="index" :title=blog.blogTitle :content=blog.blogContent :classify=blog.classify :createTime=blog.updateTime :color="blog.color" @goBlogInfo="goBlogInfo(blog)" />
@@ -11,14 +11,14 @@
     </v-row>
 
     <v-dialog v-model="sheet" fullscreen style="z-index: 2001; overflow: auto;" class="blogInfo" transition="dialog-bottom-transition">
-      <v-sheet style="background-color: #f4f7fe; min-height: 100vh" class="text-center" v-if='loadingBlogInfo'>
-        <v-overlay :value="loadingBlogInfo" color="rgb(255,255,255)" opacity='.9' class="text-center overlayBox" style="z-index: 1000">
+      <v-sheet style="min-height: 100vh" class="text-center backgroundColor" v-if='loadingBlogInfo'>
+        <v-overlay :value="loadingBlogInfo" opacity='.9' class="text-center overlayBox" style="z-index: 1000">
           <v-progress-circular :size="60" color="primary" indeterminate></v-progress-circular>
           <div class="primary--text mt-5">正在加载...</div>
         </v-overlay>
       </v-sheet>
 
-      <v-sheet style="overflow-y: hidden; min-height: 100vh; background-color: #f5f5f5" v-else>
+      <v-sheet style="overflow-y: hidden; min-height: 100vh;" class="backgroundColor" v-else>
         <div style="z-index: 2001; position: relative; max-width: 1400px; margin: 0 auto; opacity: 0.9">
           <v-btn fab small class="grey darken-2 mt-4 mx-3" @click="sheet=false" elevation="0" style="position: fixed;">
             <v-icon color="white" size="28">mdi-close</v-icon>
@@ -35,8 +35,6 @@
         </v-row>
         <ImgPreview :imgPreview='imgPreview' />
       </v-sheet>
-
-      <!-- <BlogInfo :userInfo='userInfo' :blogInfo='blogInfo' :commentInfo='commentInfo' :key="(new Date()).getTime()" @close='sheet = false' @delBlog='openDialog' @editBlog='editBlog' @publishComment = 'publishComment' v-else /> -->
     </v-dialog>
     <TipDialog :dialog='tipDialog.dialog' :content='tipDialog.content' @BtnEvent='tipDialog.dialog = false' />
     <Dialog :dialog='dialogInfo.dialog' :title="dialogInfo.title" @leftBtnEvent='dialogInfo.dialog = false' @rightBtnEvent="delBlog()" />

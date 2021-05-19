@@ -1,7 +1,7 @@
 <template>
-    <div class="rounded-lg white px-4 pt-1">
+    <div class="rounded-lg pt-1">
         <div class="primary--text text-h5 mt-6">{{ blogInfo.blogTitle }}</div>
-        <div class="d-flex justify-space-between align-center mb-3 pt-4 white">
+        <div class="d-flex justify-space-between align-center mb-3 pt-4">
             <div class="d-flex align-center">
                 <img :src="userInfo.headerImg?$store.state.configURL+userInfo.headerImg:require('@/static/head.webp')" alt="头像" style="border-radius: 5px;" class="mr-4 pointer" max-width="50px" height="50px" @click="goUserInfo()" />
                 <div class="text-body-1">
