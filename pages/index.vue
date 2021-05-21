@@ -10,9 +10,9 @@
       </v-col>
     </v-row>
 
-    <v-dialog v-model="sheet" fullscreen style="z-index: 2001; overflow: auto;" class="blogInfo" transition="dialog-bottom-transition">
-      <v-sheet style="min-height: 100vh" class="text-center backgroundColor" v-if='loadingBlogInfo'>
-        <v-overlay :value="loadingBlogInfo" opacity='.9' class="text-center overlayBox" style="z-index: 1000">
+    <v-dialog v-model="sheet" fullscreen style="z-index: 2001; overflow: auto;" transition="dialog-bottom-transition">
+      <v-sheet style="min-height: 100vh" v-if='loadingBlogInfo'>
+        <v-overlay :value="loadingBlogInfo" style="z-index: 1000" :opacity=$vuetify.theme.dark?1:0>
           <v-progress-circular :size="60" color="primary" indeterminate></v-progress-circular>
           <div class="primary--text mt-5">正在加载...</div>
         </v-overlay>
@@ -30,7 +30,7 @@
             <Comment :commentInfo='commentInfo' @publishComment='publishComment' />
           </v-col>
           <v-col cols="4" class="d-none d-sm-block">
-            <HotBlog @blogInfo='updateBlogInfo()' />
+            <HotBlog @handle-tip='updateBlogInfo' />
           </v-col>
         </v-row>
         <ImgPreview :imgPreview='imgPreview' />
@@ -84,6 +84,11 @@ export default {
   },
 
   methods:{
+
+    updateBlogInfo(blog){
+      console.log(222)
+    },
+
     goBlogInfo(blog){
       this.loadingBlogInfo = true
       this.sheet = true
@@ -105,7 +110,6 @@ export default {
     getComment(blog){
       getByBlogIdComment({blogId:blog._id}).then((res)=>{
         this.commentInfo = res.data.data
-      }).catch(err=>{
       })
     },
 

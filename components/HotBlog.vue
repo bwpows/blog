@@ -3,7 +3,7 @@
         <v-card-title class="pb-1"> 最新文章 </v-card-title>
         <v-card-text>
             <v-hover v-slot:default="{ hover }" v-for="(item,index) in blogs" :key="item.id">
-                <div class="text-truncate my-1" :class="hover?'primary--text font-weight-bold':''" v-text="(index+1)+'. '+item.blogTitle" @click="$emit('blogInfo', item)"></div>
+                <div class="text-truncate my-1" :class="hover?'primary--text font-weight-bold':''" v-text="(index+1)+'. '+item.blogTitle" @click='handleTip(item)'></div>
             </v-hover>
         </v-card-text>
     </v-card>
@@ -22,15 +22,10 @@ export default {
         })
     },
     methods:{
-        // goBlogInfo(_id){
-        //     let goBlogInfo = this.$router.resolve({
-        //         path: "/BlogInfo",
-        //         query: {
-        //             id: _id
-        //         }
-        //     });
-        //     window.open(goBlogInfo.href, '_blank');
-        // }
+        handleTip: function (item) {
+            // console.log(item)
+            this.$emit('handle-tip', 'haha')
+        }
     }
 }
 </script>

@@ -37,7 +37,7 @@
           </div>
         </div>
 
-        <v-btn text class="mt-4 primary--text" v-if="!isLogin" @click="$router.go('Login')">还没登录，点击登录？</v-btn>
+        <v-btn text class="mt-4 primary--text" v-if="!isLogin" @click="$router.replace('Login')">还没登录，点击登录？</v-btn>
 
         <v-list-item-group v-model="group" active-class="primary--text text--accent-4" v-else>
           <v-list-item v-for="item in headerMenu" :key="item.to" @click="goPage(item.to)">
@@ -60,8 +60,8 @@
             </v-list-item-icon>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
-
         </v-list-item-group>
+        
       </v-list>
     </v-navigation-drawer>
 
