@@ -4,9 +4,7 @@ const configBaseURL = 'https://www.bwpow.com:8746';
 import {state, mutations} from '../store/todos'
 import store from '../store'
 
-// const configBaseURL = process.env.NODE_ENV === "development"? 'http://localhost:8745':'https://www.bwpow.com:8746'
 function encryption(str){
-    // console.log('hspJ3ScaaMTzWYx' + '&bowei' + 'cFdmeR3X6T3cQiBY' + (JSON.stringify(str) || ''))
     return sha256('hspJ3ScaaMTzWYx' + '&bowei' + 'cFdmeR3X6T3cQiBY' + (JSON.stringify(str) || ''))
 }
 

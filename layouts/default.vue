@@ -10,6 +10,8 @@
       <nuxt v-else></nuxt>
     </v-main>
 
+    <Overlay :overlay=overlay />
+
     <v-snackbar v-model="$store.state.snack.snack" :timeout="timeout" light top>
       <div class="d-flex justify-space-between align-center">
         {{ $store.state.snack.text }}
@@ -17,10 +19,10 @@
       </div>
     </v-snackbar>
 
-    <v-overlay :value="overlay.show" color="rgb(255,255,255)" opacity='.9' class="text-center overlayBox" style="z-index: 1000">
+    <!-- <v-overlay :value="overlay.show" color="rgb(255,255,255)" opacity='.9' class="text-center overlayBox" style="z-index: 1000">
       <v-progress-circular :size="60" color="primary" indeterminate></v-progress-circular>
       <div class="primary--text mt-5">{{ overlay.text }}</div>
-    </v-overlay>
+    </v-overlay> -->
 
     <v-dialog v-model="tipDialog.dialog" max-width="290" persistent>
         <v-card>
@@ -46,6 +48,8 @@ export default {
   components:{
     Header
   },
+
+  
 
   computed: {
     overlay () {

@@ -20,6 +20,7 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'user-scalable=0,width=device-width, initial-scale=1.0' },
+      { name: 'baidu-site-verification', content: 'code-qkfi35dqdH' },
       { hid: 'description', name: 'description', content: 'bowei的博客，个人博客，优秀博客，简历' }
     ],
     link: [

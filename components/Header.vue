@@ -25,7 +25,6 @@
           <v-btn text @click="$router.push('/Login')" v-else>登录/注册</v-btn>
         </v-col>
       </v-row>
-        
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" fixed temporary style="z-index: 999; max-height: 100vh;">
       <v-list nav dense class="pt-4">
@@ -175,7 +174,7 @@ export default {
 
     exit(){
       localStorage.clear()
-      this.$router.go(0)
+      this.$router.go('/')
     },
 
     workOrder(){

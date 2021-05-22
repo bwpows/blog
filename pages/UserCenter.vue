@@ -9,36 +9,6 @@
             <UserInfo :userName=user.userName />
           </v-col>
       </v-row>
-      <v-dialog v-model="sheet" fullscreen style="z-index: 2001; overflow: auto;" class="blogInfo backgroundColor" transition="dialog-bottom-transition">
-
-        <v-sheet style="min-height: 100vh" v-if='loadingBlogInfo'>
-          <v-overlay :value="loadingBlogInfo" style="z-index: 1000" :opacity=$vuetify.theme.dark?1:0>
-            <v-progress-circular :size="60" color="primary" indeterminate></v-progress-circular>
-            <div class="primary--text mt-12">正在加载...</div>
-          </v-overlay>
-        </v-sheet>
-
-        <v-sheet style="overflow-y: hidden; min-height: 100vh;"  class="backgroundColor" v-else>
-          <div style="z-index: 2001; position: relative; max-width: 1400px; margin: 0 auto; opacity: 0.9">
-            <v-btn fab small class="grey darken-2 mt-4 mx-3" @click="sheet=false" elevation="0" style="position: fixed;">
-              <v-icon color="white" size="28">mdi-close</v-icon>
-            </v-btn>
-          </div>
-          <v-row style="max-width: 1400px; margin: 60px auto;">
-            <v-col xs='12' sm='8' md='8' lg='8' xl='8'>
-              <BlogContent :blogInfo='blogInfo' :userInfo='userInfo' @showImg="showImg" @editBlog='editBlog' @delBlog='openDialog' :key="(new Date()).getTime()" />
-              <Comment :commentInfo='commentInfo' @publishComment = 'publishComment' />
-            </v-col>
-            <v-col cols="4" class="d-none d-sm-block">
-              <HotBlog @blogInfo='updateBlogInfo()' />
-            </v-col>
-          </v-row>
-          <ImgPreview :imgPreview='imgPreview' />
-        </v-sheet>
-
-        <!-- <BlogInfo :userInfo='userInfo' :blogInfo='blogInfo' :commentInfo='commentInfo' :key="(new Date()).getTime()" @close='sheet = false' @delBlog='openDialog' @editBlog='editBlog' @publishComment = 'publishComment' /> -->
-
-      </v-dialog>
       <Dialog :dialog='dialogInfo.dialog' :title="dialogInfo.title" @leftBtnEvent='dialogInfo.dialog = false' @rightBtnEvent="delBlog()" />
       <TipDialog :dialog='tipDialog.dialog' :content='tipDialog.content' @BtnEvent='tipDialog.dialog = false' />
   </v-main>
@@ -49,8 +19,6 @@
     data: () => ({
       blogLists: [],
       user: {},
-
-      sheet: false,
       userInfo: {},
       blogInfo: {},
       commentInfo: [],
@@ -106,23 +74,12 @@
             }
         })
       },
+
       // 前往博客详情页
       goBlogInfo(blog){
-        this.loadingBlogInfo = true
-        this.sheet = true
-        this.seeBloger = blog
-        this.getComment(blog)
-        getBlog({_id:blog._id}).then(res=>{
-          this.blogInfo = res.data.data[0]
-          this.userInfo = res.data.data[0].userInfo[0]
-          if(this.blogInfo.userName == localStorage.getItem('userName')){
-            this.isAdmin = true
-          }else{
-            this.isAdmin = false
-          }
-          this.loadingBlogInfo = false
-        }).catch(err=>{
-          this.loadingBlogInfo = false
+        this.$router.push({
+          path: 'BlogInfo',
+          query: { blogId: blog._id }
         })
       },
 
@@ -131,7 +88,6 @@
           this.commentInfo = res.data.data
         })
       },
-
 
       openDialog(blog){
         this.dialogInfo.dialog = true
