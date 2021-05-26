@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="rounded-lg mt-12 pt-6">
+        <div class="rounded-lg mt-12 pt-3">
             <div class="mb-4 d-flex" v-if="isLogin">
                 <v-btn color="primary--text" elevation="0">登录才能发表评论哦</v-btn>
             </div>
@@ -11,7 +11,7 @@
                 <v-btn height="48" large color='primary--text' @click="publishComment()">发表</v-btn>
             </div>
 
-            <v-card v-for="(item, index) in commentInfo" :key="index" class="py-4 px-4 my-6 rounded-lg" elevation="0">
+            <v-card v-for="(item, index) in commentInfo" :key="index" class="py-4 px-4 my-3 rounded-lg" elevation="0">
                 <div class="d-flex">
                     <img :src="item.userInfo[0].headerImg?$store.state.configURL+item.userInfo[0].headerImg:require('@/static/head.webp')" alt="头像" style="border-radius: 5px;" class="mr-4" max-width="50px" height="50px" />
                     <div style="width: 100%;">
@@ -41,7 +41,8 @@ export default {
 
     created(){
         this.isLogin = localStorage.getItem('userName')?false:true;
-        this.headerImg = localStorage.getItem('headerImg');
+        console.log(localStorage.getItem('headerImg'))
+        this.headerImg = localStorage.getItem('headerImg')?localStorage.getItem('headerImg'):false;
     },
 
     filters:{

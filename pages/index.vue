@@ -1,15 +1,18 @@
 <template>
-  <v-main>
-    <v-row class="mx-2">
-      <v-col xs='12' sm='8' md='8' lg='8' xl='8'>
-        <Blog v-for="(blog, index) in blogLists" :key="index" :title=blog.blogTitle :content=blog.blogContent :classify=blog.classify :createTime=blog.updateTime :color="blog.color" @goBlogInfo="goBlogInfo(blog)" />
-      </v-col>
-      <v-col cols="4" class="d-none d-sm-block">
-        <BwInfo />
-        <HotBlog @blogInfo='goBlogInfo()' />
-      </v-col>
-    </v-row>
-  </v-main>
+  <div>
+    <v-main>
+      <v-row class="mx-2">
+        <v-col xs='12' sm='8' md='8' lg='8' xl='8'>
+          <Blog v-for="(blog, index) in blogLists" :key="index" :title=blog.blogTitle :content=blog.blogContent :classify=blog.classify :createTime=blog.updateTime :color="blog.color" @goBlogInfo="goBlogInfo(blog)" />
+        </v-col>
+        <v-col cols="4" class="d-none d-sm-block">
+          <BwInfo />
+          <HotBlog @blogInfo='goBlogInfo()' />
+        </v-col>
+      </v-row>
+    </v-main>
+    <Footer />
+  </div>
 </template>
 
 <script>

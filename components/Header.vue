@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="overflow-hidden">
     <v-app-bar class="headerColor" elevation="0">
       <v-row align-content='center' justify='center'>
         <v-col xs='12' sm='12' md='12' lg='9' xl='9' class="d-flex align-center pa-0">
@@ -11,7 +11,7 @@
           </div>
           <v-spacer></v-spacer>
 
-          <v-menu offset-y v-if="userInfo.nickName">
+          <v-menu offset-y v-if="userInfo.nickName || userInfo.userName">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" text v-bind="attrs" v-on="on">{{userInfo.nickName || '小诸葛'}}</v-btn>
             </template>
@@ -21,7 +21,6 @@
               </v-list-item>
             </v-list>
           </v-menu>
-          <!-- <v-btn color="primary" text  v-if="userInfo.nickName" @click="goUserCenter()">{{userInfo.nickName || '小诸葛'}}</v-btn> -->
           <v-btn text @click="$router.push('/Login')" v-else>登录/注册</v-btn>
         </v-col>
       </v-row>
@@ -65,7 +64,7 @@
     </v-navigation-drawer>
 
     <v-dialog v-model="dialog" persistent max-width="600px" style="z-index: 1000">
-      <v-card class="py-3 px-4">
+      <v-card class="py-2">
         <v-card-title>
           <span class="headline my-4">工单提交</span>
         </v-card-title>

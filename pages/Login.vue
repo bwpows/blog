@@ -110,9 +110,9 @@ export default {
             login({userName:this.userName, password:sha256(this.userPwd)}).then(res=>{
                 if(res.data.code == 2000){
                     localStorage.setItem('userName', this.userName)
-                    localStorage.setItem('nickName', res.data.data.nickName)
-                    localStorage.setItem('headerImg', res.data.data.headerImg)
                     localStorage.setItem('token', res.data.data.token)
+                    if(res.data.data.nickName) localStorage.setItem('nickName', res.data.data.nickName)
+                    if(res.data.data.headerImg) localStorage.setItem('headerImg', res.data.data.headerImg)
                     this.$router.replace('/')
                 }else{
                     this.dialog = true

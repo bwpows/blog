@@ -124,6 +124,15 @@ export function byUsGetBlog(params){
     })
 }
 
+// 博客点赞
+export function fabulous(params){
+    return Service({
+        url: '/blog/fabulous',
+        method: 'get',
+        params
+    })
+}
+
 
 // ================== 评论 ===================
 

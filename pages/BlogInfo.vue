@@ -4,6 +4,10 @@
             <v-row style="max-width: 1400px; margin: 32px auto;" v-if='!overlay.show'>
                 <v-col xs='12' sm='8' md='8' lg='8' xl='8'>
                     <BlogContent :blogInfo='blogInfo' :userInfo='userInfo' @showImg="showImg" @editBlog='editBlog' @delBlog='dialogInfo.dialog = true' />
+                    <div class="d-flex align-center">
+                        <v-btn icon @click="fabulous()"><v-icon :color="blogInfo.fabulous.indexOf(myUserName)==-1?'':'primary'">mdi-thumb-up</v-icon></v-btn>
+                        <div class="mt-1 ml-3">{{blogInfo.fabulous.length}}人觉得很赞</div>
+                    </div>
                     <Comment :commentInfo='commentInfo' @publishComment='publishComment' />
                 </v-col>
                 <v-col cols="4" class="d-none d-sm-block">
@@ -18,7 +22,7 @@
     </div>
 </template>
 <script>
-import { getByBlogIdComment, getBlog, delBlog, addComment} from '~/plugins/Request'
+import { getByBlogIdComment, getBlog, delBlog, addComment, fabulous} from '~/plugins/Request'
 export default {
     data:()=>({
         userInfo: {},
@@ -28,10 +32,18 @@ export default {
         tipDialog:{},
         dialogInfo:{ dialog: false, title: '是否删除此文章?'},
         overlay: { show: true, content: '正在更新...' },
+        myUserName:'',
     }),
     created(){
         this.getComment()
         this.getBlogInfo()
+        this.myUserName = localStorage.getItem('userName')
+    },
+    watch:{
+        '$route': function(newVal, oldVal){
+            console.log('重新夹杂')
+            this.$router.go(0)
+        }
     },
     methods:{
 
@@ -48,6 +60,7 @@ export default {
                 this.blogInfo = res.data.data[0]
                 this.userInfo = res.data.data[0].userInfo[0]
                 this.overlay.show = false;
+                console.log(res.data.data[0].fabulous)
             })
         },
 
@@ -91,6 +104,13 @@ export default {
                 query:{id: blog._id}
             });
         },
+
+        // 点赞
+        fabulous(){
+            fabulous({userName: localStorage.getItem('userName'), blogId:this.$route.query.blogId}).then(res=>{
+                this.getBlogInfo()
+            })
+        }
     }
 }
 </script>

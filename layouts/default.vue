@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <Header v-if="$route.path!='/Login'" />
-    <v-main class="backgroundColor">
+    <Header v-if="$route.path!='/Login'" style="position: fixed; width: 100vw; z-index: 999;" />
+    <v-main class="backgroundColor" :style="{'marginTop': $route.path!='/Login'? '56px':'0px'}">
       <v-row justify="center" class="ma-0 pa-0" v-if="$route.path!='/Login'">
         <v-col md='12' lg='9' class="ma-0 pa-0">
           <nuxt />
@@ -18,11 +18,6 @@
         <v-btn color="primary" text @click="closeSnack()"> 关闭 </v-btn>
       </div>
     </v-snackbar>
-
-    <!-- <v-overlay :value="overlay.show" color="rgb(255,255,255)" opacity='.9' class="text-center overlayBox" style="z-index: 1000">
-      <v-progress-circular :size="60" color="primary" indeterminate></v-progress-circular>
-      <div class="primary--text mt-5">{{ overlay.text }}</div>
-    </v-overlay> -->
 
     <v-dialog v-model="tipDialog.dialog" max-width="290" persistent>
         <v-card>
@@ -48,8 +43,6 @@ export default {
   components:{
     Header
   },
-
-  
 
   computed: {
     overlay () {
