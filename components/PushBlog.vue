@@ -1,6 +1,6 @@
 <template>
     <v-card class="my-8 rounded-lg" style="cursor: pointer" elevation='0'>
-        <v-card-title class="pb-1"> 推荐文章 </v-card-title>
+        <v-card-title class="pb-1 primary--text"> 推荐文章 </v-card-title>
         <v-card-text>
             <v-hover v-slot:default="{ hover }">
                 <div class="font-italic" :class="hover?'primary--text font-weight-bold':''">1.Git 的基本使用</div>

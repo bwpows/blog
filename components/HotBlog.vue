@@ -1,7 +1,7 @@
 <template>
-    <v-card class="rounded-lg" style="cursor: pointer" elevation='0'>
-        <v-card-title class="pb-1"> 最新文章 </v-card-title>
-        <v-card-text>
+    <v-card class="rounded-lg" elevation="0">
+        <v-card-title class="pb-1 primary--text"> 最新文章 </v-card-title>
+        <v-card-text class="pointer">
             <v-hover v-slot:default="{ hover }" v-for="(item,index) in blogs" :key="item.id">
                 <div class="text-truncate my-1" :class="hover?'primary--text font-weight-bold':''" v-text="(index+1)+'. '+item.blogTitle" @click='goBlogInfo(item)'></div>
             </v-hover>

@@ -2,7 +2,7 @@
   <v-main class="mx-4 editBlog mt-6">
     <div class="d-flex align-end my-4" >
       <img :src="blogInfo.blogTitleImg?$store.state.configURL+blogInfo.blogTitleImg:require('~/static/head.webp')" alt="头像" style=" height: 100px;" class="mr-7 rounded-lg" />
-      <v-btn outlined class="rounded-lg" @click="chooseImg()">更换题图</v-btn>
+      <v-btn outlined class="rounded-lg" @click="chooseImg()" color="primary">更换题图</v-btn>
       <input type="file" ref="filElem" style="width:0;" @change="UploadHeaderImg()">
     </div>
     <v-text-field label="输入文章标题" v-model="blogInfo.blogTitle" solo style="max-width: 800px;" class="mt-8 rounded-lg"></v-text-field>
@@ -23,8 +23,6 @@
 
 <script>
 import { quillEditor } from "vue-quill-editor";
-import hljs from "highlight.js";
-import "highlight.js/styles/night-owl.css";
 import {upload, addBlog, getBlog, putBlog} from '~/plugins/Request'
 
 export default {
@@ -50,7 +48,7 @@ export default {
       }
     },
     overlay: true,
-    colorData:['#1976D2','#ff6260','#ffb23e','#FDD835','#43A047']
+    colorData:['#1976D2','#ff6260','#ffb23e','#43A047','#F44336']
   }),
 
   head(){

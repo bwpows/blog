@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Header v-if="$route.path!='/Login'" style="position: fixed; width: 100vw; z-index: 999;" />
+    <Header v-if="$route.path!='/Login'" />
     <v-main class="backgroundColor" :style="{'marginTop': $route.path!='/Login'? '56px':'0px'}">
       <v-row justify="center" class="ma-0 pa-0" v-if="$route.path!='/Login'">
         <v-col md='12' lg='9' class="ma-0 pa-0">

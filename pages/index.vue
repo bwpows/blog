@@ -11,7 +11,7 @@
         </v-col>
       </v-row>
     </v-main>
-    <Footer />
+    <Footer class='d-none d-lg-block' />
   </div>
 </template>
 

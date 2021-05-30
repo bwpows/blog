@@ -1,6 +1,8 @@
 <template>
-    <v-card elevation='0' class="my-8 rounded-lg pb-2" @click="goBlogInfo()">
-        <v-card-title class="body-1 pb-2">{{ title }} </v-card-title>
+    <v-card class="my-8 rounded-lg pb-2" @click="goBlogInfo()" elevation="0">
+        <v-card-title class="body-1 pb-2 primary--text">
+          {{ title }}
+        </v-card-title>
         <v-divider></v-divider>
         <v-card-subtitle class="text-over no-warp ma-0 mb-2" v-html="content"></v-card-subtitle>
         <v-card-actions class="justify-space-between mr-3 py-0">

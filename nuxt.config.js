@@ -25,6 +25,9 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script:[
+      { src: "https://cdn.bootcdn.net/ajax/libs/highlight.js/11.0.0-alpha1/highlight.min.js" }
     ]
   },
 
@@ -65,12 +68,13 @@ export default {
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
+    // treeShake: true,
     theme: {
       dark: false,
       themes: {
         dark: {
           headerColor: '#1E1E1E',
-          primary: colors.blue.darken2,
+          primary: colors.orange,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
@@ -81,7 +85,7 @@ export default {
         },
         light: {
           headerColor: '#ffffff',
-          primary: colors.blue.darken2,
+          primary: colors.orange,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
@@ -96,7 +100,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    // analyze: true, 	
+    analyze: true,
     assetFilter: function(assetFilename) {	    		
       return assetFilename.endsWith('.js');	    	
     }

@@ -21,7 +21,7 @@ export default {
   width: 100vw;
   height: 100vh;
   position: fixed;
-  z-index: 9999;
+  z-index: 99999;
   background-color: rgba(0, 0, 0, 0.7);
   top: 0;
   left: 0;
@@ -37,7 +37,7 @@ export default {
   font-size: 50px;
   color: white;
 }
-.imgDolg  img{
-  width: 80%;
+.imgDolg img{
+  max-height: 80%;
 }
 </style>
