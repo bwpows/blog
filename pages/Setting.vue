@@ -72,8 +72,8 @@ export default {
                 if(res.data.code == 2000){
                     this.user = res.data.data
                     this.user.sex = res.data.data.sex.toString()
-                    localStorage.setItem('nickName', res.data.data.nickName)
-                    localStorage.setItem('headerImg', res.data.data.headerImg)
+                    if(res.data.data.nickName) localStorage.setItem('nickName', res.data.data.nickName)
+                    if(res.data.data.headerImg) localStorage.setItem('headerImg', res.data.data.headerImg)
                     this.$forceUpdate()
                 }else{
                     this.snackbar = false;

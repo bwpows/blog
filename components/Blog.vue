@@ -1,5 +1,5 @@
 <template>
-    <v-card class="my-8 rounded-lg pb-2" @click="goBlogInfo()" elevation="0">
+    <v-card class="mb-8 rounded-lg pb-2" @click="goBlogInfo()" elevation="0">
         <v-card-title class="body-1 pb-2 primary--text">
           {{ title }}
         </v-card-title>

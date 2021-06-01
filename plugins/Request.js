@@ -55,7 +55,16 @@ export function putInfo(data){
     return Service({
         url:'/user/Info',
         method: 'put',
-        data: data
+        data
+    })
+}
+
+// 获取个人点赞博客
+export function getFabulous(params){
+    return Service({
+        url: '/user/fabulous',
+        method: 'get',
+        params
     })
 }
 
@@ -67,7 +76,7 @@ export function putInfo(data){
 export function addBlog(data){
     return Service({
         url:'/blog',
-        data:data
+        data
     })
 }
 

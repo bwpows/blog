@@ -1,9 +1,10 @@
 <template>
   <div class="overflow-hidden">
     <v-app-bar color="headerColor" fixed elevation="0">
-      <v-row align-content='center' justify='center'>
+      <v-row align-content='center' justify='center' class="mx-md-1 mx-xs-0">
         <v-col xs='12' sm='12' md='12' lg='9' xl='9' class="d-flex align-center pa-0">
-          <v-app-bar-nav-icon @click="openDrawer()" class="d-flex d-sm-none mr-2" color='primary'></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon @click="drawer = true" class="d-flex d-sm-none mr-2" color='primary'></v-app-bar-nav-icon>
+          <!-- <v-app-bar-nav-icon @click="drawer = true" class=" mr-2" color='primary'></v-app-bar-nav-icon> -->
           <nuxt-link class="ml-2 mr-12 text-h6 pl-0 pointer" to='/' style="text-decoration:none"> BOWEI </nuxt-link>
           <div class="d-none d-sm-block">
             <v-btn text class="mx-2 body-2 font-weight-bold primary--text" v-for="item in headerMenu" :key="item.to" @click="goPage(item.to)">{{ item.title }}</v-btn>
@@ -20,6 +21,7 @@
               </v-list-item>
             </v-list>
           </v-menu>
+          <!-- <v-btn color="primary" text v-bind="attrs"  v-if="userInfo.userName">{{userInfo.nickName || '小诸葛'}}</v-btn> -->
           <v-btn text @click="$router.push('/Login')" v-else>登录/注册</v-btn>
           <v-btn icon small color="primary" class="mr-2" @click="rightDrawer = true"><v-icon>mdi-cog</v-icon></v-btn>
         </v-col>
@@ -47,7 +49,7 @@
     <v-navigation-drawer v-model="drawer" fixed temporary style="z-index: 999; max-height: 100vh;">
       <v-list nav dense class="pt-4">
         <div class="d-flex my-4">
-          <img :src="userInfo.headerImg?$store.state.configURL+userInfo.headerImg:require('~/static/head.webp')" alt="头像" style=" height: 80px; border-radius: 5px;" class="elevation-2" />
+          <v-img class="rounded-lg elevation-2" height="80" aspect-ratio='1' :src="userInfo.headerImg?$store.state.configURL+userInfo.headerImg:require('~/static/head.webp')" alt="头像" />
           <div class="ml-3 my-1 d-flex flex-column justify-space-between" >
             <div class=" text-truncate" style="width: 140px;">{{userInfo.nickName}}</div>
             <div class="body-2 grey--text text--darken-2 text-truncate" style="width: 140px;">{{userInfo.intro || '暂时还没有描述哦'}}</div>
@@ -102,7 +104,7 @@
   </div>
 </template>
 <script>
-import {feedback} from '~/plugins/Request'
+import {feedback, getFabulous} from '~/plugins/Request'
 export default {
   name: "Header",
   data: () => ({
@@ -118,12 +120,10 @@ export default {
     headerMenu: [
       { title: '主页', icon: 'mdi-home', to: '/'},
       { title: '个人中心', icon: 'mdi-account', to: 'UserCenter'},
-      { title: '写文章', icon: 'mdi-pencil', to: 'EditBlog'}
+      { title: '写文章', icon: 'mdi-pencil', to: 'EditBlog'},
+      { title: '编辑资料', icon: 'mdi-cog', to: 'Setting'}
     ],
     userMenu:[
-      {title:'编辑资料', eventName:'Setting', icon:'mdi-cog'},
-      {title:'我的点赞', eventName:'fabulous', icon:'mdi-thumb-up'},
-      // {title:'切换主题', eventName:'theme', icon:'mdi-weather-sunset'},
       {title:'退出登录', eventName:'exit', icon:'mdi-exit-to-app'}
     ],
     isLogin: false,
@@ -138,7 +138,7 @@ export default {
   created(){
     this.isLogin = localStorage.getItem('userName')?true:false
 
-    this.userInfo.nickName = localStorage.getItem('nickName') || false
+    this.userInfo.nickName = localStorage.getItem('nickName') || '小诸葛'
     this.userInfo.headerImg = localStorage.getItem('headerImg') || false
     this.userInfo.userName = localStorage.getItem('userName') || false
     this.order.userName = localStorage.getItem('userName') || ''
@@ -156,6 +156,7 @@ export default {
       this.$vuetify.theme.themes.light.primary = item
       this.$vuetify.theme.themes.dark.primary = item
     },
+    
     openMenu(item){
       if(item == 'theme'){
         this.$vuetify.theme.dark = !this.$vuetify.theme.dark
@@ -164,12 +165,19 @@ export default {
         this.$router.replace(item)
       }else if(item == 'exit'){
         this.exit()
+      }else if(item == 'fabulous'){
+        getFabulous({userName: this.userInfo.userName}).then(res=>{
+          console.log(res)
+        }).catch(err => {
+          console.log(err)
+        })
       }
     },
+
     openDrawer(){
       this.drawer = true
-      this.userInfo.nickName = localStorage.getItem('nickName') || false
-      this.userInfo.headerImg = localStorage.getItem('headerImg') || false
+      // this.userInfo.nickName = localStorage.getItem('nickName') || false
+      // this.userInfo.headerImg = localStorage.getItem('headerImg') || false
     },
 
     goPage(item){

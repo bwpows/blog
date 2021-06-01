@@ -155,7 +155,9 @@ export default {
             this.$store.commit('todos/updateOverlay', {show: true, text:'修改文章成功'})
             setTimeout(() => {
               this.$store.commit('todos/updateOverlay', {show: false, text:''})
-              this.$router.replace('/UserCenter')
+              this.$router.replace({
+                path: 'UserCenter', query:{ userName: localStorage.getItem('userName')}
+              })
             }, 800);
           }
         })
