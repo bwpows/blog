@@ -41,6 +41,7 @@
                 <v-btn color="primary" text x-large @click="dialog = false" style="width: 100%; height: 50px;">确定</v-btn>
             </v-card>
         </v-dialog>
+        <TipDialog :dialog='tipDialog.dialog' :content='tipDialog.content' @BtnEvent='agreePrivacy()' />
     </div>
 </template>
 
@@ -65,7 +66,12 @@ export default {
         loginBtnDis:true,
         loginBtnLoading: false,
         dialog: false,
-        dialogText: ''
+        dialogText: '',
+
+        tipDialog:{
+            dialog: false,
+            content: '我们注重对您个人隐私的保护。有时候我们需要某些信息才能为您提供您请求的服务，本隐私声明解释了这些情况下的数据收集和使用情况。本隐私声明适用于本网站的所有相关服务。如果您访问本网站、使用本网站的任何服务，那么您便接受了本<a href="https://www.bwpow.com/#/Privacy">隐私声明</a>。'
+        }
 
     }),
 
@@ -75,7 +81,19 @@ export default {
         }
     },
 
+    created(){
+        if(!localStorage.getItem('firstLogin')){
+            this.tipDialog.dialog = true
+        }else{
+            this.tipDialog.dialog = false
+        }
+    },
+
     methods:{
+        agreePrivacy(){
+            this.tipDialog.dialog = false
+            localStorage.setItem('firstLogin', true)
+        },
         checkLoginInput(){
             if(this.checkUsername() && this.userPwd){
                 this.loginBtnDis = false

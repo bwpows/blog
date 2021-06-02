@@ -4,7 +4,6 @@
       <v-row align-content='center' justify='center' class="mx-md-1 mx-xs-0">
         <v-col xs='12' sm='12' md='12' lg='9' xl='9' class="d-flex align-center pa-0">
           <v-app-bar-nav-icon @click="drawer = true" class="d-flex d-sm-none mr-2" color='primary'></v-app-bar-nav-icon>
-          <!-- <v-app-bar-nav-icon @click="drawer = true" class=" mr-2" color='primary'></v-app-bar-nav-icon> -->
           <nuxt-link class="ml-2 mr-12 text-h6 pl-0 pointer" to='/' style="text-decoration:none"> BOWEI </nuxt-link>
           <div class="d-none d-sm-block">
             <v-btn text class="mx-2 body-2 font-weight-bold primary--text" v-for="item in headerMenu" :key="item.to" @click="goPage(item.to)">{{ item.title }}</v-btn>
@@ -21,7 +20,6 @@
               </v-list-item>
             </v-list>
           </v-menu>
-          <!-- <v-btn color="primary" text v-bind="attrs"  v-if="userInfo.userName">{{userInfo.nickName || '小诸葛'}}</v-btn> -->
           <v-btn text @click="$router.push('/Login')" v-else>登录/注册</v-btn>
           <v-btn icon small color="primary" class="mr-2" @click="rightDrawer = true"><v-icon>mdi-cog</v-icon></v-btn>
         </v-col>
@@ -51,7 +49,7 @@
         <div class="d-flex my-4">
           <v-img class="rounded-lg elevation-2" height="80" aspect-ratio='1' :src="userInfo.headerImg?$store.state.configURL+userInfo.headerImg:require('~/static/head.webp')" alt="头像" />
           <div class="ml-3 my-1 d-flex flex-column justify-space-between" >
-            <div class=" text-truncate" style="width: 140px;">{{userInfo.nickName}}</div>
+            <div class=" text-truncate" style="width: 140px;">{{userInfo.nickName || '小诸葛'}}</div>
             <div class="body-2 grey--text text--darken-2 text-truncate" style="width: 140px;">{{userInfo.intro || '暂时还没有描述哦'}}</div>
           </div>
         </div>
@@ -138,7 +136,7 @@ export default {
   created(){
     this.isLogin = localStorage.getItem('userName')?true:false
 
-    this.userInfo.nickName = localStorage.getItem('nickName') || '小诸葛'
+    this.userInfo.nickName = localStorage.getItem('nickName') || false
     this.userInfo.headerImg = localStorage.getItem('headerImg') || false
     this.userInfo.userName = localStorage.getItem('userName') || false
     this.order.userName = localStorage.getItem('userName') || ''
