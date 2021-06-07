@@ -36,7 +36,7 @@ export default {
     "quill/dist/quill.core.css",
     "quill/dist/quill.snow.css",
     "quill/dist/quill.bubble.css",
-    "highlight.js/styles/night-owl.css",
+    "highlight.js/styles/darcula.css",
     "./assets/comment.css"
   ],
 

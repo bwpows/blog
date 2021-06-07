@@ -2,6 +2,11 @@
     cursor: pointer;
 }
 
+.code, kbd, pre, samp{
+    /* font-family: 'Poppins', sans-serif!important; */
+    font-size: 14px!important;
+}
+
 /* .v-application{
     font-family: "Microsoft YaHei",微软雅黑,"Microsoft JhengHei",华文细黑,STHeiti,MingLiu !important;
 } */

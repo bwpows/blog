@@ -38,6 +38,7 @@ export default {
   color: white;
 }
 .imgDolg img{
-  max-height: 80%;
+  max-height: 90%;
+  max-width: 90%;
 }
 </style>
