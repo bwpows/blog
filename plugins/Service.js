@@ -1,8 +1,8 @@
 import axios from 'axios'
 const { sha256 } = require("js-sha256")
 const configBaseURL = 'https://www.bwpow.com:8746';
-import {state, mutations} from '../store/todos'
-import store from '../store'
+// import {state, mutations} from '../store/todos'
+// import store from '../store'
 
 function encryption(str){
     return sha256('hspJ3ScaaMTzWYx' + '&bowei' + 'cFdmeR3X6T3cQiBY' + (JSON.stringify(str) || ''))

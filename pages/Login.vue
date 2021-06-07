@@ -10,8 +10,8 @@
                         <div class="text-center title pb-12 primary--text font-weight-bold" style="z-index: 1000; position: relative;">
                             <span>{{isLogin?'登录账号':'注册账号'}}</span>
                         </div>
-                        <div style="position: relative;">
-                            <v-text-field label="请输入邮箱号" @input="checkLoginInput()" solo v-model="userName"></v-text-field>
+                        <div style="position: relative;" class="mb-2">
+                            <v-text-field label="请输入邮箱号" :error-messages='errorMessage' @input="checkLoginInput()" solo v-model="userName"></v-text-field>
                             <v-btn text color="primary" rounded style="position: absolute; right: 0;top:6px" :disabled="getCodeBtnDis" @click="sendCode()" v-if="!isLogin && regStep == 1">{{second?(second+'S后重试'):'获取验证码'}}</v-btn>
                         </div>
                         <v-text-field label="请输入验证码" solo v-model="code" @input="checkNextInput()" v-if="!isLogin  && regStep == 1"></v-text-field>
@@ -19,12 +19,14 @@
                         :type="showPassword ? 'text' : 'password'" @input="checkLoginInput()"></v-text-field>
                         <v-text-field label="密码" v-else-if="!isLogin && regStep == 2" solo v-model="userPwd" @click:append="showPassword = !showPassword" 
                         :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"  :type="showPassword ? 'text' : 'password'"  @input="checkLoginInput()"></v-text-field>
-                        <div class="caption primary--text text-end"  v-if="isLogin">
-                            <v-btn text rounded color="primary" @click="isLogin = false">还没账号？点击注册</v-btn>
+                        <div class="caption primary--text">
+                            <v-btn text rounded color="primary" @click="isLogin = false" v-if="isLogin">还没账号？点击注册</v-btn>
+                            <v-btn text rounded color="primary" @click="isLogin = true" v-else>已有账号？点击登录</v-btn>
                         </div>
-                        <div class="caption primary--text text-end"  v-else>
-                            <v-btn text rounded color="primary" @click="isLogin = true">已有账号？点击登录</v-btn>
-                        </div>
+                        <v-row align="center" class="mt-2 mx-3">
+                            <v-checkbox v-model="agreePrivacy" :value="agreePrivacy" hide-details class="mt-0" @change="checkLoginInput()"></v-checkbox>
+                            <v-btn text class="px-0 pt-1">已经同意并阅读<nuxt-link to="Privacy" @click.stop="false">隐私声明</nuxt-link></v-btn>
+                        </v-row>
                         <div class="text-center pt-12">
                             <v-btn class="primary" width="100%" rounded @click="login()" v-if="isLogin" :disabled="loginBtnDis" :loading='loginBtnLoading'>登录</v-btn>
                             <v-btn class="primary" width="100%" rounded @click="verCode()" v-else-if="!isLogin && regStep == 1"  :disabled="nextBtnDis" :loading='nextBtnLoading'>下一步</v-btn>
@@ -41,7 +43,6 @@
                 <v-btn color="primary" text x-large @click="dialog = false" style="width: 100%; height: 50px;">确定</v-btn>
             </v-card>
         </v-dialog>
-        <TipDialog :dialog='tipDialog.dialog' :content='tipDialog.content' @BtnEvent='agreePrivacy()' />
     </div>
 </template>
 
@@ -67,11 +68,8 @@ export default {
         loginBtnLoading: false,
         dialog: false,
         dialogText: '',
-
-        tipDialog:{
-            dialog: false,
-            content: '我们注重对您个人隐私的保护。有时候我们需要某些信息才能为您提供您请求的服务，本隐私声明解释了这些情况下的数据收集和使用情况。本隐私声明适用于本网站的所有相关服务。如果您访问本网站、使用本网站的任何服务，那么您便接受了本<a href="https://www.bwpow.com/#/Privacy">隐私声明</a>。'
-        }
+        agreePrivacy: false,
+        errorMessage: ''
 
     }),
 
@@ -81,21 +79,9 @@ export default {
         }
     },
 
-    created(){
-        if(!localStorage.getItem('firstLogin')){
-            this.tipDialog.dialog = true
-        }else{
-            this.tipDialog.dialog = false
-        }
-    },
-
     methods:{
-        agreePrivacy(){
-            this.tipDialog.dialog = false
-            localStorage.setItem('firstLogin', true)
-        },
         checkLoginInput(){
-            if(this.checkUsername() && this.userPwd){
+            if(this.checkUsername() && this.userPwd && this.agreePrivacy){
                 this.loginBtnDis = false
                 this.regBtnDis = false
             }else{
@@ -113,8 +99,10 @@ export default {
         checkUsername(){
             var myreg = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
             if (!myreg.test(this.userName)) {
+                this.errorMessage = '请输入正确的邮箱号码'
                 return false
             } else {
+                this.errorMessage = ''
                 if(this.second == 0){
                     this.getCodeBtnDis = false
                 }else{
@@ -273,4 +261,3 @@ export default {
     background-size: cover;
 }
 </style>
-
