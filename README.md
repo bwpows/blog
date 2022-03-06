@@ -4,7 +4,7 @@
 
   Front-End Development Vue + VuetifyJS + Axios + Vuex
   
-  Back-End Development node + express + mongoose
+  Back-End Development nestjs + mongoose
   
   Server：2-Core 4G 6M lightweight application server
 
